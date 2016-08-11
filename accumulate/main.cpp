@@ -35,6 +35,7 @@ T accum_use_packaged_task(std::vector<T> const& v)
     std::thread t1 {std::move(pt0), beg,      beg+sz/2, T()};
     std::thread t2 {std::move(pt1), beg+sz/2, beg+sz,   T()};
     
+    // Need to join the thread, or the program will terminate abnormally.
     t1.join();
     t2.join();
 
@@ -64,7 +65,7 @@ int main()
     std::vector<unsigned int> v;
     
     auto die = std::bind(std::uniform_int_distribution<>{1, 2147483647}, 
-        std::default_random_engine{});
+        std::default_random_engine{ static_cast<unsigned int>(time(0))});
 
     for (int i=0; i<134000000; ++i)
     {
