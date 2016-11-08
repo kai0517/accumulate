@@ -2,8 +2,8 @@
 # Auther : Wen-Kai, Chang
 #
 CC=g++
-DEBUGFLAGS=-g -std=c++11
-RELEASEFLAGS=-std=c++11 -O3
+DEBUGFLAGS=-g -std=c++11 -pthread
+RELEASEFLAGS=-std=c++11 -O3 -pthread
 SRCDIR=accumulate/
 DEBUGDIR=./Debug/
 RELEASEDIR=./Release/
@@ -29,7 +29,7 @@ $(DEBUGDIR)$(OUTPUT) : $(DEBUGOBJS)
 	$(CC) $(DEBUGFLAGS) $(DEBUGOBJS) -o $(DEBUGDIR)$(OUTPUT)
 
 $(DEBUGDIR)main.o : $(SRCDIR)main.cpp
-	$(CC) $(DEBUGFLAGS) -c $(SRCDIR)main.cpp -o $(DEBUGDIR)main.o
+	$(CC) $(DEBUGFLAGS) -c -lpthread $(SRCDIR)main.cpp -o $(DEBUGDIR)main.o
 
 cleandebug :
 	rm -rf $(DEBUGDIR)
